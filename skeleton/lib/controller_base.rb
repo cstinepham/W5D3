@@ -1,5 +1,6 @@
 require 'active_support'
 require 'active_support/core_ext'
+require 'active_support/inflector'
 require 'erb'
 require 'byebug'
 require_relative './session'
@@ -45,13 +46,17 @@ class ControllerBase
     dir_path = File.dirname(__FILE__)
     parent_dir = "/" + dir_path.split("/")[0..-2].join("/")
     
-    template_path = File.join(parent_dir, "views", "cats_controller","#{template_name}.html.erb") 
+    template_path = File.join(parent_dir, "views", controller_name,"#{template_name}.html.erb") 
     
     file_content = File.read(template_path)
     
     render_content(ERB.new(file_content).result(binding))
   end
 
+  def controller_name 
+    self.class.to_s.underscore
+  end 
+  
   # method exposing a `Session` object
   def session
   end
