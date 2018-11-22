@@ -8,8 +8,6 @@ require_relative './session'
 class ControllerBase
   attr_reader :req, :res, :params
 
-  
-  
   # Setup the controller
   def initialize(req, res)
     @req = req  
