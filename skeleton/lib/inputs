@@ -1,0 +1,6 @@
+load "/Users/appacademy/Desktop/W5D3/skeleton/lib/session.rb"
+
+req = Rack::Request.new({ 'rack.input' => {} })
+cookie = {'_rails_lite_app' => { 'xyz' => 'abc' }.to_json}
+req.cookies.merge!(cookie)
+session = Session.new(req)
