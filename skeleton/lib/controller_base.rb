@@ -15,6 +15,7 @@ class ControllerBase
     @req = req  
     @res = res
     @already_built_response = false 
+    @session = Session.new(@req)
   end
 
   # Helper method to alias @already_built_response
@@ -27,6 +28,7 @@ class ControllerBase
     raise Error if already_built_response?
     @res['Location'] = url
     @res.status = 302
+    @session.store_session(@res)
     @already_built_response = true
   end
 
@@ -37,6 +39,7 @@ class ControllerBase
     raise Error if already_built_response?
     @res['Content-Type'] = content_type
     @res.write(content)
+    @session.store_session(@res)
     @already_built_response = true
   end
 
@@ -59,6 +62,7 @@ class ControllerBase
   
   # method exposing a `Session` object
   def session
+    @session
   end
 
   # use this with the router to call action_name (:index, :show, :create...)
